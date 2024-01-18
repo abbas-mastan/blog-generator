@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OpenAIController;
 use Illuminate\Http\Request;
@@ -15,15 +16,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('/', function(Request $request) {
-    $crawler = Goutte::request('GET', 'https://duckduckgo.com/html/?q="'.$request->title.'"');
-   
-    $summaries = $crawler->filter('.result__body')->each(function ($node) {
-        return $node->filter('.result__snippet')->text();
-    });
-    return view('app')->with('summaries', $summaries);
-
-})->name('blog');
+Route::get('/', [BlogController::class,'app']);
+Route::post('/app', [BlogController::class,'index'])->name('blog');
 
 // Route::get('open-ai', [OpenAIController::class, 'index']);
 Route::get('bring-summary', [OpenAIController::class, 'index']);

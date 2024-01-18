@@ -1,63 +1,89 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  @vite('resources/css/app.css')
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @vite('resources/css/app.css')
 </head>
 <body>
-<form action="{{route('blog')}}" method="POST" class="flex justify-center">
-  @csrf
-    <div class="space-y-12 w-[50%]">
-      <div class="border-b border-gray-900/10 pb-12">
-        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-          <div class="sm:col-span-4">
-            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Set blog post title</label>
-            <div class="mt-2">
-              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">Title</span>
-                <input type="text" name="title" id="title" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="some title">
-              </div>
-            </div>
-          <div class="sm:col-span-4">
-            <label for="username" class="block text-xs font-medium leading-6 text-gray-900">Scrap SERP or Add Global background (both optionsal)</label>
-            <div class="mt-2">
-              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <input type="button" name="summary" value="SERP scraping Enabled" class="block flex-1 border-0  py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-span-full">
-            <label for="about" class="block text-sm font-medium leading-6 text-gray-900">Global background</label>
-            <div class="mt-2">
-              <textarea id="about" name="about" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+    <form action="{{ route('blog') }}" method="POST" class="flex justify-center">
+        @csrf
+        <div class="space-y-12 w-[50%]">
+            <div class="border-b border-gray-900/10 pb-12">
+                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div class="sm:col-span-4">
+                        <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Set blog post
+                            title</label>
+                        <div class="mt-2">
+                            <div
+                                class="flex  shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <input type="text" name="title" id="title"
+                                    class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    placeholder="Enter title here">
+                            </div>
+                        </div>
+                        <div class="sm:col-span-4">
+                            <label for="username" class="block text-xs font-medium leading-6 text-gray-900">Scrap SERP
+                                or Add Global background (both optionsal)</label>
+                            <div class="mt-2">
+                                <div
+                                    class="flex shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <input type="button" name="summary" value="SERP scraping Enabled"
+                                        class="block flex-1 border-0  py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-full">
+                            <label for="about" class="block text-sm font-medium leading-6 text-gray-900">Global
+                                background</label>
+                            <div class="mt-2">
+                                <textarea id="about" name="about" rows="3"
+                                    class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 @foreach ($summaries as $summary)
-                {{ $summary }}
-            @endforeach
+{{ $summary }}
+@endforeach
               </textarea>
-            </div>
-          </div>
-          <div class="sm:col-span-4">
-            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Set # of H2 subheading</label>
-            <div class="mt-2">
-              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <input type="number" name="h1" class="block w-3 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-              </div>
-            </div>
-          </div>
-          <div class="sm:col-span-4">
-            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Set subheading data</label>
-            <div class="mt-2">
-              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <input type="number" name="h3" class="block w-3 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
-              </div>
-            </div>
-          </div>
-          
-        
-  
-      {{-- <div class="border-b border-gray-900/10 pb-12">
+                            </div>
+                        </div>
+                        <div class="sm:col-span-4">
+                            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Set # of H2
+                                subheading</label>
+                            <div class="flex justify-between">
+                                <div class="mt-2 w-[50%]">
+                                    <div
+                                        class="flex  shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                        <input type="number" name="h2" value="1"
+                                            class="h2 block w-3 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+                                <div class="mt-2 w-[50%]">
+                                    <div
+                                        class="flex  shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                        <input type="button" name="h1" value="Create H2"
+                                            class="h2Button block w-3 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="h2container">
+
+                        </div>
+                        <div class="sm:col-span-4">
+                            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Set
+                                subheading data</label>
+                            <div class="mt-2">
+                                <div
+                                    class="flex  shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                    <input type="number" name="h3"
+                                        class="block w-3 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        {{-- <div class="border-b border-gray-900/10 pb-12">
         <h2 class="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
         <p class="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
   
@@ -65,28 +91,28 @@
           <div class="sm:col-span-3">
             <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">First name</label>
             <div class="mt-2">
-              <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
           </div>
   
           <div class="sm:col-span-3">
             <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Last name</label>
             <div class="mt-2">
-              <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
           </div>
   
           <div class="sm:col-span-4">
             <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
             <div class="mt-2">
-              <input id="email" name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <input id="email" name="email" type="email" autocomplete="email" class="block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
           </div>
   
           <div class="sm:col-span-3">
             <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Country</label>
             <div class="mt-2">
-              <select id="country" name="country" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+              <select id="country" name="country" autocomplete="country-name" class="block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                 <option>United States</option>
                 <option>Canada</option>
                 <option>Mexico</option>
@@ -97,28 +123,28 @@
           <div class="col-span-full">
             <label for="street-address" class="block text-sm font-medium leading-6 text-gray-900">Street address</label>
             <div class="mt-2">
-              <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
           </div>
   
           <div class="sm:col-span-2 sm:col-start-1">
             <label for="city" class="block text-sm font-medium leading-6 text-gray-900">City</label>
             <div class="mt-2">
-              <input type="text" name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <input type="text" name="city" id="city" autocomplete="address-level2" class="block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
           </div>
   
           <div class="sm:col-span-2">
             <label for="region" class="block text-sm font-medium leading-6 text-gray-900">State / Province</label>
             <div class="mt-2">
-              <input type="text" name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <input type="text" name="region" id="region" autocomplete="address-level1" class="block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
           </div>
   
           <div class="sm:col-span-2">
             <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
             <div class="mt-2">
-              <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
             </div>
           </div>
         </div>
@@ -181,13 +207,52 @@
           </fieldset>
         </div>
       </div> --}}
-      <div class="mt-6 flex items-center justify-end gap-x-6">
-        {{-- <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button> --}}
-        <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Start Scraping</button>
+                        <div class="mt-6 flex items-center justify-end gap-x-6">
+                            {{-- <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button> --}}
+                            <button type="submit"
+                                class=" bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Start
+                                Scraping</button>
+                        </div>
+                    </div>
+
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('.h2Button').click(function(e) {
+                e.preventDefault();
+                $('.h2container').empty();
+                var quantity = $('.h2').val();
+                for (let index = 1; index <= quantity; index++) {
+                    // Create a new h2 element
+                    var newH2 = $('<h2>').text('Heading ' + index);
+
+                    // Append the new h2 element to a container (replace 'yourContainerId' with the actual ID)
+                    $('.h2container').append(`
+        <div class="flex justify-between">
+        <div class="mt-2 w-[10%] bg-indigo-600 text-white">
+                <div class="flex  shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input type="button" name="h2" value="H2${index}" class="block w-3 flex-1 border-0 bg-indigo rounded-0 py-1.5 pl-1 text-white placeholder:text-white  sm:leading-6">
+                </div>
+              </div>
+              <div class="mt-2 w-[90%]">
+                <div class="flex  shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input type="text" name="h1" class="h2Button block w-3 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                </div>
+                </div>
+              </div>
+              
+              `);
+                }
+                $('.h2container').append(`<div class="mt-6 flex items-center justify-end gap-x-6">
+        <button type="submit" class=" bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Generate Headings</button>
       </div>
-    </div>
-  
-  </form>
-  
+      `);
+            });
+        });
+    </script>
 </body>
+
 </html>
