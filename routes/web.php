@@ -20,4 +20,4 @@ Route::get('/', [BlogController::class,'app']);
 Route::post('/app', [BlogController::class,'index'])->name('blog');
 
 Route::post('get-headings', [OpenAIController::class, 'bringHeadings']);
-Route::get('bring-summary', [OpenAIController::class, 'index']);
+Route::get('bring-summary', [OpenAIController::class, 'openai']);

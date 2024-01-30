@@ -17,24 +17,21 @@ class OpenAIController extends Controller
 
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('POST', 'https://chatgpt-chatgpt3-5-chatgpt4.p.rapidapi.com/v1/chat/completions', [
-            'body' => '{
-          "model": "gpt-3.5-turbo",
-          "messages": [
-              {
-                  "role": "user",
-                  "content": "generate a blog how to train a little dog"
-              }
-          ],
-          "temperature": 0.8
-      }',
+        $response = $client->request('POST', 'https://chatgpt-api8.p.rapidapi.com/', [
+            'body' => '[
+
+            {
+                "content": "who won the super bowl 2019?",
+                "role": "user"
+            }
+        ]',
             'headers' => [
-                'X-RapidAPI-Host' => 'chatgpt-chatgpt3-5-chatgpt4.p.rapidapi.com',
+                'X-RapidAPI-Host' => 'chatgpt-api8.p.rapidapi.com',
                 'X-RapidAPI-Key' => '19134f2b12msh515696babb2758dp1ccff8jsn8272ee676b32',
                 'content-type' => 'application/json',
             ],
         ]);
-
+        
         echo $response->getBody();
     }
 
