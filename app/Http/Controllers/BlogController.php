@@ -9,21 +9,17 @@ class BlogController extends Controller
 {
     public function index(Request $request)
     {
-        
+
         $client = new Client();
         $crawler = $client->request('GET', 'https://duckduckgo.com/html/?q=("' . $request->title . '")');
         $data['summaries'] = [];
         $data['headings'] = [];
         if ($request->title) {
-            $summaries = $crawler->filter('.result__body')->each(function ($node) {
+            $data['summaries'] = $crawler->filter('.result__body')->each(function ($node) {
                 return $node->filter('.result__snippet')->text();
             });
-            $summar = '';
-            foreach ($summaries as $summary) {
-                $summar .= $summary;
-            }
             $data['title'] = $request->title;
-            $data['summaries'] = $this->generateSummary($summar);
+            // $data['summaries'] = $this->generateSummary($summar);
             $data['headings'] = $crawler->filter('.result__body')->each(function ($node) {
                 return $node->filter('h2')->text();
             });
@@ -45,39 +41,53 @@ class BlogController extends Controller
          EOD;
 
         $client = new \GuzzleHttp\Client();
-        // $response = $client->request('POST', 'https://gpt-summarization.p.rapidapi.com/summarize', [
-        //     'body' => json_encode([
-        //         'text' => $text,
-        //         'num_sentences' => 10,
-        //     ]),
-        //     'headers' => [
-        //         'X-RapidAPI-Host' => 'gpt-summarization.p.rapidapi.com',
-        //         'X-RapidAPI-Key' => '19134f2b12msh515696babb2758dp1ccff8jsn8272ee676b32',
-        //         'content-type' => 'application/json',
-        //     ],
-        // ]);
-    
-        $response = $client->request('POST', 'https://chat-gpt26.p.rapidapi.com/', [
+
+        $response = $client->request('POST', 'https://gpt-summarization.p.rapidapi.com/summarize', [
             'body' => '{
-            "model": "gpt-3.5-turbo",
-            "messages": [
-                {
-                    "role": "user",
-                    "content": "how are you"
-                }
-            ]
-        }',
+                "text": ' . $text . ',
+                "num_sentences": 5
+            }',
             'headers' => [
-                'Content-Type' => 'application/json',
-                'X-RapidAPI-Host' => 'chat-gpt26.p.rapidapi.com',
+                'X-RapidAPI-Host' => 'gpt-summarization.p.rapidapi.com',
                 'X-RapidAPI-Key' => '19134f2b12msh515696babb2758dp1ccff8jsn8272ee676b32',
                 'content-type' => 'application/json',
             ],
         ]);
-        
-      
-    
-
         return $response->getBody();
+    }
+
+    public function getBlog(Request $request)
+    {
+        $client = new \GuzzleHttp\Client();
+        $responses = [];
+        foreach ($request->headings as $heading) {
+            $response = $client->request('POST', 'https://chat-gpt-3-5-turbo.p.rapidapi.com/ChatComplitition', [
+                'body' => '{
+    "Body": {
+        "messages": [
+            {
+                "role": "assistant",
+                "content": "Your name is OpenGPT by Asad. You are helpful assistant. Use friendly tone."
+            },
+            {
+                "role": "user",
+                "content": "generate a lenghty blog post from these headings ' . $heading . '"
+            }
+        ],
+        "temperature": 0.9,
+        "max_tokens": 200,
+        "stream": false
+    }
+}',
+                'headers' => [
+                    'X-RapidAPI-Host' => 'chat-gpt-3-5-turbo.p.rapidapi.com',
+                    'X-RapidAPI-Key' => '945a619e45msha1456a3d4e05e7ap14f40djsn1346e2bd420a',
+                    'content-type' => 'application/json',
+                ],
+            ]);
+            $responses[] = json_decode($response->getBody(), true);
+
+        }
+        return view('blog',compact('responses'));
     }
 }

@@ -4,11 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     @vite('resources/css/app.css')
 </head>
 
 <body>
-    <form action="{{ route('blog') }}" method="POST" class="flex justify-center">
+    <form action="{{ route('blog') }}" method="POST" class="flex justify-center blogForm">
         @csrf
         <div class="space-y-12 w-[50%]">
             <div class="border-b border-gray-900/10 pb-12">
@@ -19,7 +21,8 @@
                         <div class="mt-2">
                             <div
                                 class="flex  shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="title" id="title" value="{{isset($title) ? $title : ''}}"
+                                <input type="text" name="title" id="title"
+                                    value="{{ isset($title) ? $title : '' }}"
                                     class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder="Enter title here">
                             </div>
@@ -42,11 +45,9 @@
                             <div class="mt-2">
                                 <textarea disabled id="summary" name="summary" rows="3"
                                     class="block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                    {{-- @foreach ($summaries as $summary) --}}
-                                    @if ($summaries)
-                                    {{ $summaries }}
-                                    @endif
-                                    {{-- @endforeach --}}
+                                    @foreach ($summaries as $summary)
+{{ $summary }}
+@endforeach
                                 </textarea>
                             </div>
                         </div>
@@ -116,7 +117,7 @@
                               </div>
                               <div class="mt-2 w-[90%]">
                                 <div class="flex  shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                  <input type="text" name="h1" class="h2Button ${'heading'+index} block w-3 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                                  <input type="text" name="headings[]" class="h2Button ${'heading'+index} block w-3 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                                 </div>
                                 </div>
                               </div>
@@ -131,6 +132,11 @@
 
             $(document).on('click', '.generateHeadings', function(e) {
                 e.preventDefault();
+                $('.generateHeadings').addClass('hidden');
+                $('.h2container').append(`
+                    <button type="submit" class="bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Generate Blog</button>
+                `);
+                $('.blogForm').attr('action', "{{route('generateBlog')}}");
                 var quantity = parseInt($('.h2').val()); // Get the value and convert it to a number
                 @isset($headings)
                     var headingsarray = @json($headings);
@@ -142,6 +148,29 @@
                 });
             });
         });
+
+        // $(document).on('click', '.generateBlog', function(e) {
+        //     e.preventDefault();
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
+
+        //     $.ajax({
+        //         data: $('.blogForm').serialize(),
+        //         url: "{{ route('generateBlog') }}",
+        //         type: "POST",
+        //         dataType: 'json',
+        //         success: function(data) {
+        //             console.log(data);
+        //         },
+        //         error: function(data) {
+        //             console.log('Error:', data);
+        //             $('#saveBtn').html('Save Changes');
+        //         }
+        //     });
+        // });
     </script>
 </body>
 
